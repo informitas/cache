@@ -44,6 +44,7 @@ func (c *Cache) Size() int {
 	return len(c.storage)
 }
 
+// Has checks if a key exists in the cache
 func (c *Cache) Has(key string)  bool {
 	_, ok := c.storage[key]
 	return ok
