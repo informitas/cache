@@ -17,11 +17,8 @@ func (c *Cache) Set(key string, value interface{}) {
 }
 
 // Get returns an item from the cache. If the key does not exist, it returns nil
-func (c *Cache) Get(key string) (interface{}, error) {
-	if c.Has(key) {
-		return c.storage[key], nil
-	}
-	return nil, errors.New("key does not exist")
+func (c *Cache) Get(key string) interface{} {
+	return c.storage[key]
 }
 
 // Delete removes an item from the cache. If the key does not exist, it returns an error
@@ -48,4 +45,15 @@ func (c *Cache) Size() int {
 func (c *Cache) Has(key string)  bool {
 	_, ok := c.storage[key]
 	return ok
+}
+
+// Keys returns a slice of all the keys in the cache
+func (c *Cache) Keys() []string {
+	keys := make([]string, len(c.storage))
+	i := 0
+	for k := range c.storage {
+		keys[i] = k
+		i++
+	}
+	return keys
 }
