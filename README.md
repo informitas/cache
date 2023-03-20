@@ -1,5 +1,12 @@
 Go Cache
 ================================
+![Go Report](https://goreportcard.com/badge/github.com/informitas/cache)
+![Repository Top Language](https://img.shields.io/github/languages/top/informitas/cache)
+![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/informitas/cache)
+![Github Repository Size](https://img.shields.io/github/repo-size/informitas/cache)
+![Github Open Issues](https://img.shields.io/github/issues/informitas/cache)
+![License](https://img.shields.io/badge/license-MIT-green)
+![GitHub last commit](https://img.shields.io/github/last-commit/informitas/cache)
 
 Go Cache helps you to cache your data in a simple way.
 
