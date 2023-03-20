@@ -5,32 +5,32 @@ import (
 	"sync"
 )
 
-type Cache struct {
-	storage map[string]interface{}
+type Cache[T any] struct {
+	storage map[string]T
 	mu *sync.RWMutex
 }
 
 // New creates a new cache
-func New() *Cache {
-	return &Cache{storage: make(map[string]interface{}), mu: &sync.RWMutex{}}
+func New[T any]() *Cache[T] {
+	return &Cache[T]{storage: make(map[string]T), mu: &sync.RWMutex{}}
 }
 
 // Set adds an item to the cache. If the key already exists, it overwrites the value
-func (c *Cache) Set(key string, value interface{}) {
+func (c *Cache[T]) Set(key string, value T) {
 	c.mu.Lock()
 	c.storage[key] = value
 	c.mu.Unlock()
 }
 
 // Get returns an item from the cache. If the key does not exist, it returns nil
-func (c *Cache) Get(key string) interface{} {
+func (c *Cache[T]) Get(key string) T {
 	c.mu.RLock()
 	defer c.mu.RUnlock()
 	return c.storage[key]
 }
 
 // Delete removes an item from the cache. If the key does not exist, it returns an error
-func (c *Cache) Delete(key string) error {
+func (c *Cache[T]) Delete(key string) error {
 	//check if key exists. If not, return an error
 	c.mu.Lock()
 	if _, ok := c.storage[key]; !ok {
@@ -43,19 +43,19 @@ func (c *Cache) Delete(key string) error {
 }
 
 // Clear empties the cache
-func (c *Cache) Clear() {
+func (c *Cache[T]) Clear() {
 	c.mu.Lock()
-	c.storage = make(map[string]interface{})
+	c.storage = make(map[string]T)
 	c.mu.Unlock()
 }
 
 // Size returns the number of items in the cache
-func (c *Cache) Size() int {
+func (c *Cache[T]) Size() int {
 	return len(c.storage)
 }
 
 // Has checks if a key exists in the cache
-func (c *Cache) Has(key string)  bool {
+func (c *Cache[T]) Has(key string)  bool {
 	c.mu.RLock()
 	defer c.mu.RUnlock()
 	_, ok := c.storage[key]
@@ -63,7 +63,7 @@ func (c *Cache) Has(key string)  bool {
 }
 
 // Keys returns a slice of all the keys in the cache
-func (c *Cache) Keys() []string {
+func (c *Cache[T]) Keys() []string {
 	keys := make([]string, len(c.storage))
 	i := 0
 	c.mu.RLock()
