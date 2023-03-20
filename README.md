@@ -107,3 +107,8 @@ func main() {
 
 
 ```
+
+#TODO
+- [ ] Add Background Job to remove expired key
+- [ ] Add Factory to create cache with different type
+- [ ] Add Logger to log cache activity
