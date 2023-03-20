@@ -19,5 +19,8 @@ func GetExpiration(ttl time.Duration) time.Time {
 }
 
 func IsExpired(timer time.Time) bool {
+	if timer.IsZero() {
+		return false
+	}
 	return GetNow().After(timer)
 }

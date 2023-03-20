@@ -23,11 +23,17 @@ func New[T any]() *Cache[T] {
 	return &Cache[T]{storage: make(map[string]internal.CacheStore[T]), mu: &sync.RWMutex{}}
 }
 
+func (c *Cache[T]) Options() *CacheOptions {
+	return &CacheOptions{}
+}
+
 // Set adds an item to the cache. If the key already exists, it overwrites the value
 func (c *Cache[T]) Set(key string, value T, options ...*CacheOptions) error {
+
 	if err := internal.ValidateKey(key); err != nil {
 		return err
 	}
+
 
 	if err := internal.ValidateValue(value); err != nil {
 		return err
@@ -110,8 +116,6 @@ func (c *Cache[T]) Size() int {
 
 // Has checks if a key exists in the cache
 func (c *Cache[T]) Has(key string)  bool {
-	c.mu.RLock()
-	defer c.mu.RUnlock()
 	_, ok := c.storage[key]
 	return ok
 }
@@ -127,4 +131,17 @@ func (c *Cache[T]) Keys() []string {
 	}
 	c.mu.RUnlock()
 	return keys
+}
+
+// Values returns a slice of all the values in the cache
+func (c *Cache[T]) Values() []T {
+	values := make([]T, len(c.storage))
+	i := 0
+	c.mu.RLock()
+	for _, v := range c.storage {
+		values[i] = v.Data
+		i++
+	}
+	c.mu.RUnlock()
+	return values
 }
