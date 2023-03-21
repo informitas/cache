@@ -65,6 +65,7 @@ import (
 
 func main() {
 	cache := cache.New[int]()
+	cache.EnableLogs()
 
 	options := cache.Options()
 	options.TTL = 2 * time.Second
@@ -115,7 +116,6 @@ func main() {
 
 ```
 
-#TODO
-- [ ] Add Background Job to remove expired key
-- [ ] Add Factory to create cache with different type
-- [ ] Add Logger to log cache activity
+# TODO
+- [✅] Add Background Job to remove expired key
+- [✅] Add Logger to log cache activity

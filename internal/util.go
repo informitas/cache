@@ -8,6 +8,8 @@ const (
 
 	valueEmptyErr = "value is empty"
 	immutableErr  = "value is immutable"
+
+	keyWasExpiredErr = "key was expired [key = %q, expiration = %q]\n"
 )
 
 func GetNow() time.Time {
