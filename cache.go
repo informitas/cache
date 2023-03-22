@@ -9,6 +9,7 @@ func New[T any]() *internal.Cache[T] {
 	return internal.New[T]()
 }
 
+// Options returns the cache options
 func Options() *internal.CacheOptions {
 	return &internal.CacheOptions{}
 }
